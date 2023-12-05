@@ -1,4 +1,4 @@
-package poo;
+package poo.modele;
 
 public class Position<U extends Number> {
     private U positionX;
@@ -14,11 +14,11 @@ public class Position<U extends Number> {
     public U getPositionY() {
         return positionY;
     }
-    public void setPositionX(U positionX) {
-        this.positionX = positionX;
+    public void setPositionX(U deltaX) {
+        this.positionX = deltaX;
     }
-    public void setPositionY(U positionY) {
-        this.positionY = positionY;
+    public void setPositionY(U deltaY) {
+        this.positionY = deltaY;
     }
     public Position<U> copy(){
         return new Position<U>(this.positionX, this.positionY);
