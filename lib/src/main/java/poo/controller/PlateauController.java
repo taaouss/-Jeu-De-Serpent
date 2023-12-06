@@ -37,12 +37,11 @@ public class PlateauController {
             for (int y = 0; y < getPlateauLongueur(); y++) {
                  setPlateauCellType(x, y, " ");;
             }
-            System.out.println();
-        }
-        
-        plateauView.AfficherPlateau(getPlateauLargeur(), getPlateauLongueur(), getPlateauTab());
+        } 
       }
      
-      
+      public void UpdatePlateau (){
+         plateauView.AfficherPlateau(getPlateauLargeur(), getPlateauLongueur(), getPlateauTab());
+      }
     
 }
