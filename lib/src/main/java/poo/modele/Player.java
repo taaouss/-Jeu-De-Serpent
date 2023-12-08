@@ -1,13 +1,13 @@
 package poo.modele;
 
-public class Player {
+public class Player <U extends Number>{
     private String name;
-    private Snake snake;
+    private Snake<U> snake;
     // score ?
     
     public Player(String name){
         this.name= name;
-        this.snake= new Snake();
+        this.snake= new Snake<U>();
     }
 
     public String getName() {
@@ -18,11 +18,11 @@ public class Player {
         this.name = name;
     }
 
-    public Snake getSnake() {
+    public Snake<U> getSnake() {
         return snake;
     }
 
-    public void setSnake(Snake snake) {
+    public void setSnake(Snake <U> snake) {
         this.snake = snake;
     }
     

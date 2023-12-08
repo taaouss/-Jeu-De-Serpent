@@ -2,8 +2,8 @@ package poo.modele;
 
 import java.util.List;
 
-public class Snake {
-    private List<Segment> body;
+public class Snake <U extends Number>{
+    private List<Segment<U>> body;
     private int length;
     private Direction direction=Direction.HAUT ;
      //couleur
@@ -15,7 +15,7 @@ public class Snake {
     public int getLength() {
         return length;
     }
-    public void setBody(List<Segment> body) {
+    public void setBody(List<Segment<U>> body) {
         this.body = body;
     }
     public void setLength(int length) {

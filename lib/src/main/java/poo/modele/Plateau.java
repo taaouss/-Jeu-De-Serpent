@@ -1,22 +1,43 @@
 package poo.modele;
 
 
-public class Plateau {
+public class Plateau<U extends Number>{
     private int largeur, longueur ;
-    private String[][] cells;
+    private Segment<U>[][] cells;
+    private boolean isInt=true ;
 
-    public Plateau(int largeur , int longueur) {
-        cells = new String[largeur][longueur];
-        this.largeur = largeur ;
-        this.longueur = longueur ;
+    public Plateau(int largeur, int longueur) {
+        this.largeur = largeur;
+        this.longueur = longueur;
+        this.cells = new Segment[longueur][largeur];
+
+        for (int i = 0; i < longueur; i++) {
+            for (int j = 0; j < largeur; j++) {
+                if(isInt){
+                    this.cells[i][j] = new Segment<>(createPosition((U) Integer.valueOf(i), (U) Integer.valueOf(j)), SegmentType.VIDE);
+                }else{
+                    this.cells[i][j] = new Segment<>(createPosition((U) Double.valueOf(i), (U) Double.valueOf(j)), SegmentType.VIDE);
+
+                }
+
+            }
+        }
     }
 
-    public void setCellType(int x, int y, String string) {
-        cells[x][y] = string;
+    private <T extends Number> Position<T> createPosition(T x, T y) {
+        return new Position<>(x, y);
+    }
+   
+    public void setCellType(int x, int y, SegmentType string) {
+        cells[x][y].setType(string); 
+
+    }
+    public SegmentType getCellType(int x, int y){
+        return cells[x][y].getType(); 
 
     }
 
-    public String[][] getCells() {
+    public Segment<U>[][] getCells() {
         return cells;
     }
 

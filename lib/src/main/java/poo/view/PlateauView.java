@@ -1,14 +1,12 @@
 package poo.view;
-
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import  poo.modele.*;
 
 
-public class PlateauView {
+public class PlateauView <U extends Number>{
     
 
 
-     public void AfficherPlateau(int largeur , int longueur, String[][] strings) {
+     public void AfficherPlateau(int largeur , int longueur, Segment<U>[][] strings) {
        
         for (int x = 0; x < largeur; x++) {
             System.out.println();
@@ -17,7 +15,19 @@ public class PlateauView {
             }
              System.out.println();
             for (int y = 0; y < longueur; y++) {
-                System.out.printf ("|  "+strings[x][y]);
+                switch (strings[x][y].getType()) {
+                    case VIDE:
+                        System.out.printf ("|   ");
+                        break;
+                     case NOURRITURE:
+                        System.out.printf ("|  #");
+                        break;    
+                
+                     default: //SERPENT
+                        System.out.printf ("|  *");
+                        break;
+                }
+                
             }
             System.out.print(" |");
             
@@ -30,6 +40,7 @@ public class PlateauView {
 
 
     }
+
 
    /* 
    private void updateCellAppearance(int x, int y) {

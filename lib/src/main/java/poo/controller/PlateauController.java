@@ -1,19 +1,23 @@
 package poo.controller;
 
+
+
 import poo.modele.Plateau;
+import poo.modele.Segment;
+import poo.modele.SegmentType;
 import poo.view.PlateauView;
 
-public class PlateauController {
-    private Plateau plateau ;
-    private PlateauView plateauView ;
+public class PlateauController <U extends Number>{
+    private Plateau <U> plateau ;
+    private PlateauView<U> plateauView ;
 
-    public PlateauController(Plateau plateau, PlateauView plateauView) {
+    public PlateauController(Plateau<U> plateau, PlateauView<U> plateauView) {
         this.plateau = plateau;
         this.plateauView = plateauView;
     }
 
    // controle l'objet modele
-    public  String[][] getPlateauTab() {
+    public  Segment<U>[][] getPlateauTab() {
         return plateau.getCells();
     }
     public int getPlateauLargeur(){
@@ -22,12 +26,12 @@ public class PlateauController {
      public int getPlateauLongueur(){
         return plateau.getLongueur();
     }
-    public void setPlateauCellType(int x, int y, String string){
+    public void setPlateauCellType(int x, int y, SegmentType string){
         plateau.setCellType(x, y, string);
     }
     //controle l'objet view
 
-    public PlateauView getPlateauView() {
+    public PlateauView <U> getPlateauView() {
         return plateauView;
     }
 
@@ -35,13 +39,16 @@ public class PlateauController {
 
         for (int x = 0; x < getPlateauLargeur(); x++) {
             for (int y = 0; y < getPlateauLongueur(); y++) {
-                 setPlateauCellType(x, y, " ");;
+                 setPlateauCellType(x, y, SegmentType.VIDE);;
             }
         } 
       }
      
-      public void UpdatePlateau (){
-         plateauView.AfficherPlateau(getPlateauLargeur(), getPlateauLongueur(), getPlateauTab());
+    public void UpdatePlateau (){
+        
+        plateauView.AfficherPlateau(getPlateauLargeur(), getPlateauLongueur(), getPlateauTab());
       }
     
+  
+
 }
