@@ -1,8 +1,7 @@
 package poo.controller;
-
-
-
+import java.util.List;
 import poo.modele.Plateau;
+import poo.modele.Position;
 import poo.modele.Segment;
 import poo.modele.SegmentType;
 import poo.view.PlateauView;
@@ -35,20 +34,17 @@ public class PlateauController <U extends Number>{
         return plateauView;
     }
 
-    public void initPlateau(){
+    public void initPlateau(List<Position<U>> nourriture){
 
-        for (int x = 0; x < getPlateauLargeur(); x++) {
-            for (int y = 0; y < getPlateauLongueur(); y++) {
-                 setPlateauCellType(x, y, SegmentType.VIDE);;
-            }
-        } 
+        for(Position<U> p :nourriture){
+          setPlateauCellType((Integer)p.getPositionX(),(Integer)p.getPositionY(), SegmentType.NOURRITURE);;
+        }
       }
      
     public void UpdatePlateau (){
-        
         plateauView.AfficherPlateau(getPlateauLargeur(), getPlateauLongueur(), getPlateauTab());
       }
     
-  
+    
 
 }
