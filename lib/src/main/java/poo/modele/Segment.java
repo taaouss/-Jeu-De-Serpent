@@ -26,5 +26,5 @@ public class Segment<U extends Number> {
         this.type = type;
     }
     
-    
+    //public void seDeplacer(){}
 }

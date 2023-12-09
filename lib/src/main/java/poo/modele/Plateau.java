@@ -32,8 +32,8 @@ public class Plateau<U extends Number>{
         cells[x][y].setType(string); 
 
     }
-    public SegmentType getCellType(int x, int y){
-        return cells[x][y].getType(); 
+    public SegmentType getCellType(U x, U y){
+        return cells[(Integer)x][(Integer)y].getType(); 
 
     }
 
