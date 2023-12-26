@@ -14,6 +14,7 @@ public class Position<U extends Number> {
     public U getPositionY() {
         return positionY;
     }
+
   public Position<U> copy(){
         return new Position<U>(this.positionX, this.positionY);
     }

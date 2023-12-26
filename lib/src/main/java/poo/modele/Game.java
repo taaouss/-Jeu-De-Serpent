@@ -11,6 +11,8 @@ public class Game <U extends Number>{
         this.nombreNourriture = nombreNourriture;
         this.player = player;
         this.plateau = plateau;
+    
+        
     }
     public List<Position<U>> getNourritures() {
         return nourritures;

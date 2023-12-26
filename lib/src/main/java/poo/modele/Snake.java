@@ -15,8 +15,8 @@ public class Snake <U extends Number>{
     public Direction getDirection() {
         return direction ;
     }
-    public Snake( ){
-        this.head = new Segment<>(new Position(0, 0), SegmentType.SERPENT);
+    public Snake(U x,U y ){
+        this.head = new Segment<>(new Position(x, y), SegmentType.SERPENT);
         body.add(head);
     }
     public int getLength() {

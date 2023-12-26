@@ -5,9 +5,9 @@ public class Player <U extends Number>{
     private Snake<U> snake;
     // score ?
     
-    public Player(String name){
+    public Player(String name,U x,U y){
         this.name= name;
-        this.snake= new Snake<U>();
+        this.snake= new Snake<U>(x,y);
     }
 
     public String getName() {

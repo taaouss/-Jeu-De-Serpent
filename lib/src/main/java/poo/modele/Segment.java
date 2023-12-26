@@ -18,6 +18,7 @@ public class Segment<U extends Number> {
         this.position = position;
     }
 
+
     public SegmentType getType() {
         return type;
     }
@@ -25,6 +26,43 @@ public class Segment<U extends Number> {
     public void setType(SegmentType type) {
         this.type = type;
     }
+
+    private U incrementValue(U value) {
+        if (value instanceof Integer) {
+            return (U) Integer.valueOf(value.intValue() + 1);
+        } else if (value instanceof Double) {
+            return (U) Double.valueOf(value.doubleValue() + 1);
+        }
+        return value;
+    }
+    private U decrementerValue(U value) {
+        if (value instanceof Integer) {
+            return (U) Integer.valueOf(value.intValue() - 1);
+        } else if (value instanceof Double) {
+            return (U) Double.valueOf(value.doubleValue() - 1);
+        }
+        return value;
+    }
     
-    //public void seDeplacer(){}
+    
+    public void deplacerright() {
+        U newX = this.position.getPositionX();
+        U newY = incrementValue(this.position.getPositionY());
+        this.position = new Position<>(newX, newY);
+    }
+    public void deplacerLeft() {
+        U newX = this.position.getPositionX();
+        U newY = decrementerValue(this.position.getPositionY());
+        this.position = new Position<>(newX, newY);
+    }
+    public void deplacerUp() {
+        U newX = decrementerValue(this.position.getPositionX());
+        U newY = this.position.getPositionY();
+        this.position = new Position<>(newX, newY);
+    }
+    public void deplacerDown () {
+        U newX = incrementValue(this.position.getPositionX());
+        U newY = this.position.getPositionY();
+        this.position = new Position<>(newX, newY);
+    }
 }

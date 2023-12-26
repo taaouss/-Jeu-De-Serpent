@@ -25,6 +25,9 @@ public class PlateauController <U extends Number>{
      public int getPlateauLongueur(){
         return plateau.getLongueur();
     }
+    public void setPlateau(Plateau plateau){
+        this.plateau=plateau;
+    }
     public void setPlateauCellType(int x, int y, SegmentType string){
         plateau.setCellType(x, y, string);
     }
