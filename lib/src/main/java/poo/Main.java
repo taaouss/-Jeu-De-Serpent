@@ -28,13 +28,16 @@ public class Main {
         // (int)segment.getPosition().getPositionY(), SegmentType.SERPENT);
 
         Game jeu = new Game<>(new HumanPlayer<>("taous", 2, 3), plateau, 5); // 5 cest pour le nombre de food
-        //jeu.getPlayer(0).getSnake().setBody(new ArrayList<Segment<Integer>>().add(new Segment<Integer>(position, SegmentType.SERPENT)).add(new Segment<Integer>(new Position<>(1, 2), SegmentType.SERPENT)));
-      //  jeu.addPlayer(new HumanPlayer<>("Lyes", 3, 2));
+        // jeu.getPlayer(0).getSnake().setBody(new ArrayList<Segment<Integer>>().add(new
+        // Segment<Integer>(position, SegmentType.SERPENT)).add(new Segment<Integer>(new
+        // Position<>(1, 2), SegmentType.SERPENT)));
+        // jeu.addPlayer(new HumanPlayer<>("Lyes", 3, 2));
 
         GameController gameController = new GameController<>(jeu);
         gameController.gameInit();
 
-        plateauController.initPlateau(gameController.genererNourriture(plateauController.getPlateauLongueur(),plateauController.getPlateauLargeur()));
+        plateauController.initPlateau(gameController.genererNourriture(plateauController.getPlateauLongueur(),
+                plateauController.getPlateauLargeur()));
         // init plateau recoit la nourriture generé par le GameController
 
         // plateauController.setPlateauCellType((int)segment.getPosition().getPositionX(),
@@ -43,11 +46,9 @@ public class Main {
 
         plateauController.setPlateau(jeu.getPlateau());
 
-        plateauController.UpdatePlateau();
+        plateauController.UpdatePlateau(jeu.getPlayers());
 
         gameController.jouer(plateauController);
-            
- 
 
     }
 }

@@ -50,7 +50,10 @@ public class Snake <U extends Number>{
     public void setHead(Segment<U> head) {
         this.head = head;
     }
-   
+    public Segment<U> getLast(){
+        System.out.println("lyess"+ this.body.get(this.length-1).getPosition().getPositionX().toString() + this.body.get(this.length-1).getPosition().getPositionY().toString()  );
+        return this.body.get(this.length-1);
+    }
     public void addLength(Position <U> position){
         length++;
         body.add(0,new Segment<U>(position,SegmentType.SERPENT));
