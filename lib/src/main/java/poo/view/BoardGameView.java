@@ -2,7 +2,7 @@ package poo.view;
 import  poo.modele.*;
 
 
-public class PlateauView <U extends Number>{
+public class BoardGameView <U extends Number>{
     
 
 

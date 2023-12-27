@@ -1,35 +1,42 @@
 package poo.modele;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game <U extends Number>{
     private List <Position<U>> nourritures ;
     private int nombreNourriture;
-    private Player<U> player ; 
-    private Plateau<U> plateau ;
+    private List <Player<U> >players = new ArrayList<Player<U> >() ; 
+    private BoardGame<U> plateau ;
     
-    public Game( Player<U> player, Plateau<U> plateau,int nombreNourriture) {
+    public Game( Player <U>player, BoardGame<U> plateau,int nombreNourriture) {
+
         this.nombreNourriture = nombreNourriture;
-        this.player = player;
+        players.add(player);
         this.plateau = plateau;
-    
-        
+
     }
+
+    public void addPlayer(Player <U>player){
+        players.add(player);
+    }
+
     public List<Position<U>> getNourritures() {
         return nourritures;
     }
     public void setNourritures(List<Position<U>> nourritures) {
         this.nourritures = nourritures;
     }
-    public Player<U> getPlayer() {
-        return player;
+    public Player <U>getPlayer(int i) {
+        return players.get(i);
     }
-    public void setPlayer(Player<U> player) {
-        this.player = player;
+   public  List <Player <U>> getPlayers() {
+        return players;
     }
-    public Plateau<U> getPlateau() {
+ 
+    public BoardGame<U> getPlateau() {
         return plateau;
     }
-    public void setPlateau(Plateau<U> plateau) {
+    public void setPlateau(BoardGame<U> plateau) {
         this.plateau = plateau;
     }
     public int getNombreNourriture() {
@@ -39,7 +46,6 @@ public class Game <U extends Number>{
         this.nombreNourriture = nombreNourriture;
     }
     
-     
-
+    
          
 }

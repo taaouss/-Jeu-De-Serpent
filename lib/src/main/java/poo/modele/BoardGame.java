@@ -1,12 +1,12 @@
 package poo.modele;
 
 
-public class Plateau<U extends Number>{
+public class BoardGame<U extends Number>{
     private int largeur, longueur ;
     private Segment<U>[][] cells;
     private boolean isInt=true ;
 
-    public Plateau(int largeur, int longueur) {
+    public BoardGame(int largeur, int longueur) {
         this.largeur = largeur;
         this.longueur = longueur;
         this.cells = new Segment[longueur][largeur];
