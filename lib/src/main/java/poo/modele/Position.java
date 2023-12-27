@@ -1,8 +1,8 @@
 package poo.modele;
 
 public class Position<U extends Number> {
-    private final U positionX;
-    private final U positionY;
+    private  U positionX;
+    private  U positionY;
 
     public Position(U positionX,U positionY){
         this.positionX=positionX;

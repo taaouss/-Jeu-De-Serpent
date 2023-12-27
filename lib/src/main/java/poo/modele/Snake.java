@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Snake <U extends Number>{
-    private List<Segment<U>> body = new ArrayList<>();
+    private List<Segment<U>> body = new ArrayList<Segment<U>>();
     private int length;
     private Direction direction=Direction.HAUT ;
     private Segment <U> head ;
@@ -16,7 +16,7 @@ public class Snake <U extends Number>{
         return direction ;
     }
     public Snake(U x,U y ){
-        this.head = new Segment<>(new Position(x, y), SegmentType.SERPENT);
+        this.head = new Segment<U>(new Position<U>(x, y), SegmentType.SERPENT);
         body.add(head);
         length =1;
     }
@@ -52,7 +52,7 @@ public class Snake <U extends Number>{
     }
     public Segment<U> getLast(){
         System.out.println("lyess"+ this.body.get(this.length-1).getPosition().getPositionX().toString() + this.body.get(this.length-1).getPosition().getPositionY().toString()  );
-        return this.body.get(this.length-1);
+        return this.body.get(this.body.size()-1);
     }
     public void addLength(Position <U> position){
         length++;

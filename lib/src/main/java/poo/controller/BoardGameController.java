@@ -19,7 +19,7 @@ public class BoardGameController<U extends Number> {
 
     // controle l'objet modele
     public Segment<U>[][] getPlateauTab() {
-        return plateau.getCells();
+        return this.plateau.getCells();
     }
 
     public int getPlateauLargeur() {
@@ -30,7 +30,7 @@ public class BoardGameController<U extends Number> {
         return plateau.getLongueur();
     }
 
-    public void setPlateau(BoardGame plateau) {
+    public void setPlateau(BoardGame<U> plateau) {
         this.plateau = plateau;
     }
 
@@ -57,15 +57,15 @@ public class BoardGameController<U extends Number> {
 
     public void UpdatePlateau(List<Player<U>> players) {
 
-        for (Player<U> player : players) {
+        // for (Player<U> player : players) {
 
-            List<Segment<U>> body = player.getSnake().getBody();
-            for (Segment<U> seg : body) {
-                this.plateau.setCellType((int) seg.getPosition().getPositionX(), (int) seg.getPosition().getPositionX(),
-                        SegmentType.SERPENT);
+        //     List<Segment<U>> body = player.getSnake().getBody();
+        //     for (Segment<U> seg : body) {
+        //        this.plateau.setCellType((Integer) seg.getPosition().getPositionX(), (Integer) seg.getPosition().getPositionX(),
+        //                 SegmentType.SERPENT);
 
-            }
-        }
+        //     }
+        // }
 
         plateauView.AfficherPlateau(getPlateauLargeur(), getPlateauLongueur(), getPlateauTab());
     }
