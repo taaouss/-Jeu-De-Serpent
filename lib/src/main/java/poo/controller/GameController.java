@@ -29,17 +29,19 @@ public class GameController<U extends Number> {
 
     public List<Position<U>> genererNourriture(int longueur, int largeur) {
         List<Position<U>> nourriture = new ArrayList<>();
-        Random random = new Random();
-
         for (int i = 0; i < jeu.getNombreNourriture(); i++) {
-            U x = genererCoordonnee(random, longueur);
-            U y = genererCoordonnee(random, largeur);
-
-            Position<U> segment = new Position<U>(x, y);
-            nourriture.add(segment);
+           
+            nourriture.add(genererUneNourriture(longueur, largeur));
         }
-
         return nourriture;
+    }
+
+    public Position<U> genererUneNourriture(int longueur, int largeur){
+        Random random = new Random();
+         U x = genererCoordonnee(random, longueur);
+         U y = genererCoordonnee(random, largeur);
+
+           return new Position<U>(x, y);
     }
 
     private U genererCoordonnee(Random random, int maxValue) {
@@ -161,164 +163,70 @@ public class GameController<U extends Number> {
         return value;
     }
 
-    private boolean traitementDirection(String input, int numerJoueur) {
-        // Gestion des directions en utilisant une énumération
-        DirectionKey direction = DirectionKey.transformer(input);
-        if (direction != null) {
+  private boolean traitementDirection(String input, int numerJoueur) {
+    DirectionKey direction = DirectionKey.transformer(input);
 
-            if (deplacementValid(direction, numerJoueur)) {
-                System.out.println("Direction : " + direction);
-                Segment seg = this.jeu.getPlayer(numerJoueur).getSnake().getHead();
-                System.out.println("ancien " + (Integer) seg.getPosition().getPositionX()
-                        + (Integer) seg.getPosition().getPositionY());
-                // jeu.getPlateau().setCellType((Integer) seg.getPosition().getPositionX(),
-                //         (Integer) seg.getPosition().getPositionY(), SegmentType.VIDE);
-                U oldX ,oldY;
-                   oldX = this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionX();
-                   oldY =  this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY();
-                   System.out.println("le type de olds et oldy avant :"+ jeu.getPlateau().getCellType(oldX, oldY));
+    if (direction != null) {
+        if (deplacementValid(direction, numerJoueur)) {
+            // Enregistrez les anciennes coordonnées
+            U oldX = this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionX();
+            U oldY = this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY();
 
-                switch (direction) {
-                    case UP:
-                     
-                        U newX = decrementerValue(
-                                this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionX());
-                        U newY = this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY();
-                        if (jeu.getPlateau().getCellType(newX, newY) == SegmentType.NOURRITURE) {
-
-                            this.jeu.getPlayer(numerJoueur).getSnake().addLength(new Position<>(newX, newY));
-                             this.jeu.getPlateau().setCellType((int) newX, (int) newY, SegmentType.SERPENT);
-                        } else {
-                            this.jeu.getPlateau().setCellType(
-                             (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                             .getPositionX(),
-                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition() .getPositionY(),SegmentType.VIDE);
-                            this.jeu.getPlayer(numerJoueur).getSnake().seDeplacer(new Position<>(newX, newY));
-                            this.jeu.getPlateau().setCellType((int) newX, (int) newY,
-                            SegmentType.SERPENT);
-
-                        }
-                        break;
-
-                    case DOWN:
-
-                        U newX1 = incrementValue(
-                                this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionX());
-                        U newY1 = this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY();
-
-                        if (jeu.getPlateau().getCellType(newX1, newY1) == SegmentType.NOURRITURE) {
-
-                            this.jeu.getPlayer(numerJoueur).getSnake().addLength(new Position<>(newX1, newY1));
-                            this.jeu.getPlateau().setCellType((int) newX1, (int) newY1, SegmentType.SERPENT);
-
-                        } else {
-                            this.jeu.getPlateau().setCellType(
-                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            .getPositionX(),
-                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            .getPositionY(),
-                            SegmentType.VIDE);
-                            this.jeu.getPlayer(numerJoueur).getSnake().seDeplacer(new Position<>(newX1, newY1));
-                            this.jeu.getPlateau().setCellType((int) newX1, (int) newY1,
-                            SegmentType.SERPENT);
-
-                        }
-                        break;
-
-                    case RIGHT:
-
-                        U newX2 = this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionX();
-                        U newY2 = incrementValue(
-                                this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY());
-                        if (jeu.getPlateau().getCellType(newX2, newY2) == SegmentType.NOURRITURE) {
-                            this.jeu.getPlayer(numerJoueur).getSnake().addLength(new Position<>(newX2, newY2));
-                            this.jeu.getPlateau().setCellType((int) newX2, (int) newY2, SegmentType.SERPENT);
-
-                        } else {
-                            this.jeu.getPlateau().setCellType(
-                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            .getPositionX(),
-                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            .getPositionY(),
-                            SegmentType.VIDE);
-                            this.jeu.getPlayer(numerJoueur).getSnake().seDeplacer(new Position<>(newX2, newY2));
-                            this.jeu.getPlateau().setCellType((int) newX2, (int) newY2,
-                            SegmentType.SERPENT);
-
-                        }
-
-                        break;
-                    case LEFT:
-
-                        U newX3 = this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionX();
-                        U newY3 = decrementerValue(
-                                this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY());
-                        if (jeu.getPlateau().getCellType(newX3, newY3) == SegmentType.NOURRITURE) {
-
-                            this.jeu.getPlayer(numerJoueur).getSnake().addLength(new Position<>(newX3, newY3));
-                            this.jeu.getPlateau().setCellType((int) newX3, (int) newY3, SegmentType.SERPENT);
-
-                        } else {
-                            this.jeu.getPlateau().setCellType(
-                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            .getPositionX(),
-                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            .getPositionY(),
-                            SegmentType.VIDE);
-                            this.jeu.getPlayer(numerJoueur).getSnake().seDeplacer(new Position<>(newX3, newY3));
-                            this.jeu.getPlateau().setCellType((int) newX3, (int) newY3,SegmentType.SERPENT);
-
-                        }
-                        break;
-
-                    default:
-                        System.err.println("erreur");
-                        break;
-                }
-                // jeu.getPlateau().setCellType((Integer) seg.getPosition().getPositionX(),
-                //         (Integer) seg.getPosition().getPositionY(), SegmentType.SERPENT);
-                System.out.println(
-                        "apres " + (Integer) this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionX()
-                                +(Integer) this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY());
-                                
-                                
-                                
-                                System.out.println("le type de olds et oldy :"+ jeu.getPlateau().getCellType(oldX, oldY));
-
-                // Mettez en œuvre la logique pour déplacer le serpent en fonction de la
-                // direction
-                return true;
-            } else {
-                System.out.println("Game Over ");
-                return false;
+            // Déplacez le serpent en fonction de la direction
+            switch (direction) {
+                case UP:
+                    deplacerSerpent(numerJoueur, decrementerValue(oldX), oldY);
+                    break;
+                case DOWN:
+                    deplacerSerpent(numerJoueur, incrementValue(oldX), oldY);
+                    break;
+                case RIGHT:
+                    deplacerSerpent(numerJoueur, oldX, incrementValue(oldY));
+                    break;
+                case LEFT:
+                    deplacerSerpent(numerJoueur, oldX, decrementerValue(oldY));
+                    break;
+                default:
+                    System.err.println("Direction inattendue");
+                    return true;
             }
-        } else {
-            System.out.println("Direction inconnue");
+
+            // Mettez à jour le plateau
+          //  plateauController.UpdatePlateau(jeu.getPlayers());
+
             return true;
+        } else {
+            System.out.println("Game Over ");
+            return false;
         }
+    } else {
+        System.out.println("Direction inconnue");
+        return true;
     }
+}
 
-    // Énumération pour représenter les directions
-    // private enum Direction {
-    // UP("\u001B[A"),
-    // DOWN("\u001B[B"),
-    // RIGHT("\u001B[C"),
-    // LEFT("\u001B[D");
+private void deplacerSerpent(int numerJoueur, U newX, U newY) {
+    if (jeu.getPlateau().getCellType(newX, newY) == SegmentType.NOURRITURE) {
+        this.jeu.getPlayer(numerJoueur).getSnake().addLength(new Position<>(newX, newY));
+        this.jeu.getPlateau().setCellType((int) newX, (int) newY, SegmentType.SERPENT);
+        Position <U>food = genererUneNourriture(jeu.getPlateau().getLongueur(), jeu.getPlateau().getLargeur());
 
-    // private final String input;
+        // Vérifiez si la nouvelle position de la nourriture chevauche la position du serpent
+        while (this.jeu.getPlateau().getCellType( food.getPositionX(), food.getPositionY()) == SegmentType.SERPENT) {
+            // Si c'est le cas, régénérez une nouvelle position pour la nourriture
+            food = genererUneNourriture(jeu.getPlateau().getLongueur(), jeu.getPlateau().getLargeur());
+        }
 
-    // Direction(String input) {
-    // this.input = input;
-    // }
+        // Mettez à jour le plateau avec la nouvelle position de la nourriture
+        this.jeu.getPlateau().setCellType((int) food.getPositionX(), (int) food.getPositionY(), SegmentType.NOURRITURE);
 
-    // public static Direction transformer(String input) {
-    // for (Direction direction : values()) {
-    // if (input.startsWith(direction.input)) {
-    // return direction;
-    // }
-    // }
-    // return null;
-    // }
-    // }
+    } else {
+        Position<U> oldPosition = this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition();
+        this.jeu.getPlateau().setCellType((int) oldPosition.getPositionX(), (int) oldPosition.getPositionY(), SegmentType.VIDE);
+        this.jeu.getPlayer(numerJoueur).getSnake().seDeplacer(new Position<>(newX, newY));
+        this.jeu.getPlateau().setCellType((int) newX, (int) newY, SegmentType.SERPENT);
+    }
+}
+
 
 }
