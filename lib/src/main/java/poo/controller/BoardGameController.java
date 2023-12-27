@@ -1,16 +1,16 @@
 package poo.controller;
 import java.util.List;
-import poo.modele.Plateau;
+import poo.modele.BoardGame;
 import poo.modele.Position;
 import poo.modele.Segment;
 import poo.modele.SegmentType;
-import poo.view.PlateauView;
+import poo.view.BoardGameView;
 
-public class PlateauController <U extends Number>{
-    private Plateau <U> plateau ;
-    private PlateauView<U> plateauView ;
+public class BoardGameController <U extends Number>{
+    private BoardGame <U> plateau ;
+    private BoardGameView<U> plateauView ;
 
-    public PlateauController(Plateau<U> plateau, PlateauView<U> plateauView) {
+    public BoardGameController(BoardGame<U> plateau, BoardGameView<U> plateauView) {
         this.plateau = plateau;
         this.plateauView = plateauView;
     }
@@ -25,15 +25,18 @@ public class PlateauController <U extends Number>{
      public int getPlateauLongueur(){
         return plateau.getLongueur();
     }
-    public void setPlateau(Plateau plateau){
+    public void setPlateau(BoardGame plateau){
         this.plateau=plateau;
     }
     public void setPlateauCellType(int x, int y, SegmentType string){
         plateau.setCellType(x, y, string);
-    }
+    } 
+     public SegmentType getPlateauCellType(U x, U y){
+           return plateau.getCellType(x,y) ;
+     }
     //controle l'objet view
 
-    public PlateauView <U> getPlateauView() {
+    public BoardGameView <U> getPlateauView() {
         return plateauView;
     }
 
