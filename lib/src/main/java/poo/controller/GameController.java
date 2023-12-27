@@ -75,8 +75,8 @@ public class GameController<U extends Number> {
                         break;
                     }
 
-                    plateauController.setPlateau(jeu.getPlateau());
-                    plateauController.UpdatePlateau(jeu.getPlayers());
+                   plateauController.setPlateau(jeu.getPlateau());
+                   plateauController.UpdatePlateau(jeu.getPlayers());
 
                 }
 
@@ -171,29 +171,31 @@ public class GameController<U extends Number> {
                 Segment seg = this.jeu.getPlayer(numerJoueur).getSnake().getHead();
                 System.out.println("ancien " + (Integer) seg.getPosition().getPositionX()
                         + (Integer) seg.getPosition().getPositionY());
-                jeu.getPlateau().setCellType((Integer) seg.getPosition().getPositionX(),
-                        (Integer) seg.getPosition().getPositionY(), SegmentType.VIDE);
+                // jeu.getPlateau().setCellType((Integer) seg.getPosition().getPositionX(),
+                //         (Integer) seg.getPosition().getPositionY(), SegmentType.VIDE);
+                U oldX ,oldY;
+                   oldX = this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionX();
+                   oldY =  this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY();
+                   System.out.println("le type de olds et oldy avant :"+ jeu.getPlateau().getCellType(oldX, oldY));
 
                 switch (direction) {
                     case UP:
-
+                     
                         U newX = decrementerValue(
                                 this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionX());
                         U newY = this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY();
                         if (jeu.getPlateau().getCellType(newX, newY) == SegmentType.NOURRITURE) {
 
                             this.jeu.getPlayer(numerJoueur).getSnake().addLength(new Position<>(newX, newY));
-                            // this.jeu.getPlateau().setCellType((int) newX, (int) newY, SegmentType.SERPENT);
+                             this.jeu.getPlateau().setCellType((int) newX, (int) newY, SegmentType.SERPENT);
                         } else {
-                            // this.jeu.getPlateau().setCellType(
-                            // (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            // .getPositionX(),
-                            // (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            // .getPositionY(),
-                            // SegmentType.VIDE);
+                            this.jeu.getPlateau().setCellType(
+                             (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
+                             .getPositionX(),
+                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition() .getPositionY(),SegmentType.VIDE);
                             this.jeu.getPlayer(numerJoueur).getSnake().seDeplacer(new Position<>(newX, newY));
-                            // this.jeu.getPlateau().setCellType((int) newX, (int) newY,
-                            // SegmentType.SERPENT);
+                            this.jeu.getPlateau().setCellType((int) newX, (int) newY,
+                            SegmentType.SERPENT);
 
                         }
                         break;
@@ -203,21 +205,22 @@ public class GameController<U extends Number> {
                         U newX1 = incrementValue(
                                 this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionX());
                         U newY1 = this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY();
+
                         if (jeu.getPlateau().getCellType(newX1, newY1) == SegmentType.NOURRITURE) {
 
                             this.jeu.getPlayer(numerJoueur).getSnake().addLength(new Position<>(newX1, newY1));
-                            // this.jeu.getPlateau().setCellType((int) newX1, (int) newY1, SegmentType.SERPENT);
+                            this.jeu.getPlateau().setCellType((int) newX1, (int) newY1, SegmentType.SERPENT);
 
                         } else {
-                            // this.jeu.getPlateau().setCellType(
-                            // (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            // .getPositionX(),
-                            // (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            // .getPositionY(),
-                            // SegmentType.VIDE);
+                            this.jeu.getPlateau().setCellType(
+                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
+                            .getPositionX(),
+                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
+                            .getPositionY(),
+                            SegmentType.VIDE);
                             this.jeu.getPlayer(numerJoueur).getSnake().seDeplacer(new Position<>(newX1, newY1));
-                            // this.jeu.getPlateau().setCellType((int) newX1, (int) newY1,
-                            // SegmentType.SERPENT);
+                            this.jeu.getPlateau().setCellType((int) newX1, (int) newY1,
+                            SegmentType.SERPENT);
 
                         }
                         break;
@@ -229,18 +232,18 @@ public class GameController<U extends Number> {
                                 this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY());
                         if (jeu.getPlateau().getCellType(newX2, newY2) == SegmentType.NOURRITURE) {
                             this.jeu.getPlayer(numerJoueur).getSnake().addLength(new Position<>(newX2, newY2));
-                            // this.jeu.getPlateau().setCellType((int) newX2, (int) newY2, SegmentType.SERPENT);
+                            this.jeu.getPlateau().setCellType((int) newX2, (int) newY2, SegmentType.SERPENT);
 
                         } else {
-                            // this.jeu.getPlateau().setCellType(
-                            // (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            // .getPositionX(),
-                            // (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            // .getPositionY(),
-                            // SegmentType.VIDE);
+                            this.jeu.getPlateau().setCellType(
+                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
+                            .getPositionX(),
+                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
+                            .getPositionY(),
+                            SegmentType.VIDE);
                             this.jeu.getPlayer(numerJoueur).getSnake().seDeplacer(new Position<>(newX2, newY2));
-                            // this.jeu.getPlateau().setCellType((int) newX2, (int) newY2,
-                            // SegmentType.SERPENT);
+                            this.jeu.getPlateau().setCellType((int) newX2, (int) newY2,
+                            SegmentType.SERPENT);
 
                         }
 
@@ -251,19 +254,19 @@ public class GameController<U extends Number> {
                         U newY3 = decrementerValue(
                                 this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY());
                         if (jeu.getPlateau().getCellType(newX3, newY3) == SegmentType.NOURRITURE) {
+
                             this.jeu.getPlayer(numerJoueur).getSnake().addLength(new Position<>(newX3, newY3));
-                            // this.jeu.getPlateau().setCellType((int) newX3, (int) newY3, SegmentType.SERPENT);
+                            this.jeu.getPlateau().setCellType((int) newX3, (int) newY3, SegmentType.SERPENT);
 
                         } else {
-                            // this.jeu.getPlateau().setCellType(
-                            // (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            // .getPositionX(),
-                            // (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
-                            // .getPositionY(),
-                            // SegmentType.VIDE);
+                            this.jeu.getPlateau().setCellType(
+                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
+                            .getPositionX(),
+                            (int) this.jeu.getPlayer(numerJoueur).getSnake().getLast().getPosition()
+                            .getPositionY(),
+                            SegmentType.VIDE);
                             this.jeu.getPlayer(numerJoueur).getSnake().seDeplacer(new Position<>(newX3, newY3));
-                            // this.jeu.getPlateau().setCellType((int) newX3, (int) newY3,
-                            // SegmentType.SERPENT);
+                            this.jeu.getPlateau().setCellType((int) newX3, (int) newY3,SegmentType.SERPENT);
 
                         }
                         break;
@@ -272,11 +275,15 @@ public class GameController<U extends Number> {
                         System.err.println("erreur");
                         break;
                 }
-                jeu.getPlateau().setCellType((Integer) seg.getPosition().getPositionX(),
-                        (Integer) seg.getPosition().getPositionY(), SegmentType.SERPENT);
+                // jeu.getPlateau().setCellType((Integer) seg.getPosition().getPositionX(),
+                //         (Integer) seg.getPosition().getPositionY(), SegmentType.SERPENT);
                 System.out.println(
-                        "apres " + (Integer) seg.getPosition().getPositionX()
-                                + (Integer) seg.getPosition().getPositionY());
+                        "apres " + (Integer) this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionX()
+                                +(Integer) this.jeu.getPlayer(numerJoueur).getSnake().getHead().getPosition().getPositionY());
+                                
+                                
+                                
+                                System.out.println("le type de olds et oldy :"+ jeu.getPlateau().getCellType(oldX, oldY));
 
                 // Mettez en œuvre la logique pour déplacer le serpent en fonction de la
                 // direction
