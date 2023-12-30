@@ -51,7 +51,6 @@ public class BoardGameController<U extends Number> {
 
         for (Position<U> p : nourriture) {
             setPlateauCellType((Integer) p.getPositionX(), (Integer) p.getPositionY(), SegmentType.NOURRITURE);
-            ;
         }
     }
 

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game <U extends Number>{
-    private List <Position<U>> nourritures ;
+    private List <Position<U>> nourritures  = new ArrayList<Position<U>>();
     private int nombreNourriture;
     private List <Player<U> >players = new ArrayList<Player<U> >() ; 
     private BoardGame<U> plateau ;
