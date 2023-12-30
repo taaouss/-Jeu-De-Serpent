@@ -6,13 +6,21 @@ import java.util.List;
 public class Snake <U extends Number>{
     private List<Segment<U>> body = new ArrayList<Segment<U>>();
     private int length;
-    private Direction direction=Direction.HAUT ;
+    private DirectionKey direction=DirectionKey.LEFT ;
     private Segment <U> head ;
-     //couleur
-     //head ?
- 
+    private double speed =1;  // Ajoutez cette variable à la classe Snake
+
+// Ajoutez ces méthodes à la classe Snake
+public double getSpeed() {
+    return speed;
+}
+
+public void setSpeed(double speed) {
+    this.speed = speed;
+}
+
      
-    public Direction getDirection() {
+    public DirectionKey getDirection() {
         return direction ;
     }
     public Snake(U x,U y ){
@@ -31,7 +39,7 @@ public class Snake <U extends Number>{
         this.length = length;
     }
 
-    public void setDirection(Direction direction) {
+    public void setDirection(DirectionKey direction) {
         this.direction = direction;
     }
    
@@ -59,4 +67,21 @@ public class Snake <U extends Number>{
         body.add(0,new Segment<U>(position,SegmentType.SERPENT));
         head= body.get(0);
     }
+    public boolean detecterAutoCollision() {
+        Position<U> tetePosition = this.getHead().getPosition();
+    
+        for (int i = 1; i < this.getBody().size(); i++) {
+            Position<U> segmentPosition = this.getBody().get(i).getPosition();
+    
+            if (segmentPosition.getPositionX().equals(tetePosition.getPositionX()) &&
+                segmentPosition.getPositionY().equals(tetePosition.getPositionY())) {
+                return true; // Auto-collision détectée
+            }
+        }
+    
+        return false;
+    }
+
+    
+    
 }
