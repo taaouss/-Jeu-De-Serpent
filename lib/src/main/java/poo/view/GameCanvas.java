@@ -4,9 +4,14 @@ import poo.modele.Segment;
 
 import java.util.List;
 
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import poo.controller.BoardGameController;
 import poo.controller.GameController;
 import poo.modele.Player;
@@ -16,37 +21,57 @@ import poo.modele.Snake;
 public class GameCanvas extends Canvas {
     private final BoardGameController<Integer> plateauController;
     private final GameController<Integer> gameController;
-    private long lastUpdateTime = 0;
-    private final long updateInterval = 1_000_000_000L / 10;  // Mettez à jour toutes les 10 frames par seconde
+    private boolean gameOver =false ;
+
+      /**
+     * Constructeur de la classe GameCanvas.
+     *
+     * @param plateauController Le contrôleur du plateau de jeu.
+     * @param gameController    Le contrôleur du jeu.
+     * @param width             La largeur du Canvas.
+     * @param height            La hauteur du Canvas.
+     */
     public GameCanvas(BoardGameController<Integer> plateauController , GameController<Integer> gameController,double width , double height) {
-      super(width, height);
+       super(width, height);
  
         this.plateauController = plateauController;
         this.gameController = gameController;
         
-        // Utilisez un AnimationTimer pour mettre à jour le rendu du jeu à intervalles réguliers
         new javafx.animation.AnimationTimer() {
             @Override
             public void handle(long now) {
-                draw(); // Mettez à jour le rendu du jeu à chaque image
+               if(!gameOver && !gameController.getJeu().isDeplacementFluide()) draw(); // Mettez à jour le rendu du jeu à chaque image
             }
         }.start();
     }
+    
 
-    private void draw() {
+     /**
+     * Dessine le contenu du Canvas en fonction de l'état actuel du jeu.
+     */
+    public void draw() {
         // Obtenez le contexte graphique du Canvas
+     
         GraphicsContext gc = getGraphicsContext2D();
 
         // Effacez le Canvas
         gc.clearRect(0, 0, getWidth(), getHeight());
-
-        // Dessinez le plateau en utilisant le plateauController
+         
+        if(gameController.getJeu().isFin()==true){
+            
+            gameOver=true;
+           drawFinDuJeu();
+        }
+       
+        else {
+        
         drawBoard(gc);
 
-        // Dessinez d'autres éléments du jeu (serpents, nourriture, etc.) en utilisant plateauController
         drawPlayers(gc);
 
         drawFood(gc);
+        }
+      
     }
 
  private void drawBoard(GraphicsContext gc) {
@@ -69,10 +94,10 @@ public class GameCanvas extends Canvas {
     }
 
     private void drawPlayers(GraphicsContext gc) {
-        List<Player<Integer>> players = gameController.getJeu().getPlayers();
+        List<Player> players = gameController.getJeu().getPlayers();
     
-        for (Player<Integer> player : players) {
-            Snake<Integer> snake = player.getSnake();
+        for (Player player : players) {
+            Snake snake = player.getSnake();
     
             // Définir la couleur du serpent pour chaque joueur
             // Vous pouvez utiliser une logique pour attribuer une couleur différente à chaque joueur
@@ -81,29 +106,28 @@ public class GameCanvas extends Canvas {
             // Obtenir la taille de chaque cellule
             double cellSize = calculateCellSize();
     
+            List<Segment> corpsSerpent = snake.getBody();
+            double margin = 0;
+
             // Itérer sur tous les segments du serpent et dessiner chaque segment
-            for (Segment segment : snake.getBody()) {
-                Number xValue = segment.getPosition().getPositionX();
-                Number yValue = segment.getPosition().getPositionY();
-                double x, y;
-                if (xValue instanceof Integer) {
-                    x = (Integer) xValue * cellSize;
-                } else if (xValue instanceof Double) {
-                    x = ((Double) xValue).intValue() * cellSize;
-                } else {
-                    throw new IllegalStateException("La valeur de x n'est ni un Integer ni un Double.");
-                }
+            for (Segment segment : corpsSerpent) { 
+                double xValue = segment.getPosition().getPositionX().doubleValue();
+                double yValue = (double) segment.getPosition().getPositionY().doubleValue();
+                
+                // Ajouter une marge entre les segments
     
-                if (yValue instanceof Integer) {
-                    y = (Integer) yValue * cellSize;
-                } else if (yValue instanceof Double) {
-                    y = ((Double) yValue).intValue() * cellSize;
-                } else {
-                    throw new IllegalStateException("La valeur de y n'est ni un Integer ni un Double.");
-                }
+                // Calculer les nouvelles positions en ajoutant une marge
+               
+                  double x = xValue * cellSize  ;
+                  double y = yValue * cellSize ;
+                
+                
     
                 // Dessiner chaque segment du serpent
-                gc.fillRect(y, x, cellSize, cellSize);
+                if (margin != 0) gc.fillRect(x, y, cellSize , cellSize);
+                    else gc.fillRect(x, y, cellSize , cellSize);
+                margin++;
+                
             }
         }
     }
@@ -125,22 +149,76 @@ public class GameCanvas extends Canvas {
 private void drawFood(GraphicsContext gc) {
     // Obtenez les positions de la nourriture depuis le GameController
     List<Position> nourritures = gameController.getJeu().getNourritures();
+     double cellSize = calculateCellSize();
 
     // Dessinez chaque position de nourriture
     for (Position nourriture : nourritures) {
-        double cellSize = calculateCellSize();
         double x = nourriture.getPositionX().doubleValue() * cellSize;
         double y = nourriture.getPositionY().doubleValue() * cellSize;
 
         // Dessinez la nourriture (par exemple, un cercle de couleur différente)
         gc.setFill(Color.RED);
-        gc.fillOval(x, y, cellSize, cellSize);
-        //System.out.println("la position de la nouristure "+ nourriture.getPositionX().doubleValue() + nourriture.getPositionY().doubleValue());
+        gc.fillOval(x, y, cellSize, cellSize);/*********************************************************************************************************** */
     }
+    int lastIndx =nourritures.size()-1 ;
+    double x = nourritures.get(lastIndx).getPositionX().doubleValue() * cellSize;
+    double y = nourritures.get(lastIndx).getPositionY().doubleValue() * cellSize;
+    gc.setFill(Color.BEIGE);
+    gc.fillOval(x, y, cellSize, cellSize);
+    int Indx =nourritures.size()-2 ;
+    double x1 = nourritures.get(Indx).getPositionX().doubleValue() * cellSize;
+    double y1 = nourritures.get(Indx).getPositionY().doubleValue() * cellSize;
+    gc.setFill(Color.YELLOW);
+    gc.fillOval(x1, y1, cellSize, cellSize);
+
+}
+
+  /**
+   * Dessine la fin du jeu, affiche un message et un bouton "Quitter".
+   */
+  public void drawFinDuJeu() {
+    GraphicsContext gc = getGraphicsContext2D();
+    double canvasWidth = getWidth();
+    double canvasHeight = getHeight();
+
+    gc.setFill(Color.BLACK);
+    gc.setFont(Font.font("Arial", FontWeight.BOLD, 70));
+
+    String finDuJeuMessage = "Fin du jeu !";
+
+    Text text = new Text(finDuJeuMessage);
+    text.setFont(gc.getFont());
+    double textWidth = text.getLayoutBounds().getWidth();
+    double textHeight = text.getLayoutBounds().getHeight();
+
+    double messageX = (canvasWidth - textWidth) / 2;
+    double messageY = (canvasHeight - textHeight) / 2 + textHeight; // Ajustement pour aligner le texte au centre
+
+    gc.fillText(finDuJeuMessage, messageX, messageY);
+
+     Group buttonGroup = new Group();
+
+     Button quitterButton = new Button("Quitter");
+     quitterButton.setOnMousePressed(e -> System.exit(0));  
+ 
+     buttonGroup.getChildren().addAll(quitterButton);
+ 
+     Group root = (Group) getScene().getRoot();
+     root.getChildren().add(buttonGroup);
+ 
+     double buttonWidth = 100;
+     double quitterButtonX = (canvasWidth - 2 * buttonWidth - 20) / 2;
+     double buttonY = messageY + 50;  
+ 
+     quitterButton.setLayoutX(quitterButtonX);
+     quitterButton.setLayoutY(buttonY);
+     
+
 }
 
 private double calculateCellSize() {
         // Calculez la taille d'une cellule en fonction de la taille du Canvas et du plateau
         return Math.min(getWidth() / plateauController.getPlateauLongueur(), getHeight() / plateauController.getPlateauLargeur());
     }
+
 }

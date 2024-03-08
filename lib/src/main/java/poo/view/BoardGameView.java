@@ -2,63 +2,57 @@ package poo.view;
 
 import poo.modele.*;
 
+/**
+ * Classe responsable de l'affichage du plateau de jeu dans la console.
+ *
+ * @param <U> Le type générique utilisé pour les coordonnées du plateau.
+ */
 public class BoardGameView<U extends Number> {
 
-    public void AfficherPlateau(int largeur, int longueur, Segment<U>[][] strings) {
+    /**
+     * Affiche le plateau de jeu dans la console en utilisant des caractères ASCII.
+     *
+     * @param largeur  La largeur du plateau.
+     * @param longueur La longueur du plateau.
+     * @param segments Le tableau bidimensionnel de segments représentant le plateau.
+     */
+    public void AfficherPlateau(int largeur, int longueur, Segment<U>[][] segments) {
 
+        // Affichage du plateau
         for (int x = 0; x < largeur; x++) {
             System.out.println();
             for (int y = 0; y < longueur; y++) {
                 System.out.print("_ _ ");
             }
             System.out.println();
+
             for (int y = 0; y < longueur; y++) {
-                switch (strings[x][y].getType()) {
+                // Affichage du contenu de chaque cellule en fonction du type de segment
+                switch (segments[y][x].getType()) {
                     case VIDE:
                         System.out.printf("|   ");
                         break;
                     case NOURRITURE:
-                        System.out.printf("|  #");
+                        System.out.printf("|  $");
                         break;
                     case SERPENT:
-                        System.out.printf("|  *");
+                        System.out.printf("|  O");
                         break;
-
-                    default: // SERPENT
-                        System.out.printf("|  ");
+                    default:
+                        System.out.printf("|  "); 
                         break;
                 }
-
             }
             System.out.print(" |");
-
         }
+
         System.out.println();
+
+        // Ligne inférieure du plateau
         for (int y = 0; y < longueur; y++) {
             System.out.print("_ _ ");
         }
+
         System.out.println();
-
     }
-
-    /*
-     * private void updateCellAppearance(int x, int y) {
-     * Rectangle cell = (Rectangle) getChildren().get(y * GRID_WIDTH + x);
-     * 
-     * switch (cells[x][y]) {
-     * case EMPTY:
-     * cell.setFill(Color.WHITE);
-     * break;
-     * case SNAKE:
-     * cell.setFill(Color.GREEN);
-     * break;
-     * case FOOD:
-     * cell.setFill(Color.RED);
-     * break;
-     * // Ajoutez d'autres types de cellules au besoin
-     * }
-     * }
-     * 
-     */
-
 }
